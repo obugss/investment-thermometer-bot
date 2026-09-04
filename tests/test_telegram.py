@@ -23,7 +23,10 @@ class SendMessageTests(unittest.TestCase):
         request = mock_urlopen.call_args.args[0]
         self.assertEqual(request.get_method(), "POST")
         self.assertEqual(request.full_url, "https://api.telegram.org/botsecret-token/sendMessage")
-        self.assertEqual(request.data, b"chat_id=12345&text=hello&parse_mode=HTML")
+        self.assertEqual(
+            request.data,
+            b"chat_id=12345&text=hello&parse_mode=HTML&disable_web_page_preview=true",
+        )
 
     @patch("investment_thermometer.telegram.urlopen")
     def test_rejects_unsuccessful_api_response(self, mock_urlopen: object) -> None:
