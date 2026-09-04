@@ -5,6 +5,7 @@ from urllib.error import HTTPError, URLError
 
 from .message import format_snapshot
 from .source import SourceFormatError, fetch_market_snapshot
+from .storage import save_snapshot
 from .telegram import send_message
 
 
@@ -18,6 +19,8 @@ def main() -> None:
         send_message(token, chat_id, "投资温度计抓取失败，请检查 GitHub Actions 日志。")
         raise RuntimeError("market data could not be fetched or parsed") from exc
 
+    snapshot_path = save_snapshot(snapshot)
+    print(f"Saved market snapshot to {snapshot_path}.")
     send_message(token, chat_id, format_snapshot(snapshot))
     print(f"Sent market snapshot updated at {snapshot.updated_at:%Y-%m-%d %H:%M}.")
 

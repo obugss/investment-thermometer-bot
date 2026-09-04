@@ -1,6 +1,6 @@
 # Investment Thermometer Bot
 
-每天从有知有行公开页面读取全市场温度和股债现金配置，并通过 GitHub Actions 推送到 Telegram。当前方案是定时任务，不需要长期运行的云主机。
+每天从有知有行公开页面读取全市场温度、指数温度和股债现金配置，通过 GitHub Actions 推送到 Telegram，并将当日数据保存回本仓库。当前方案是定时任务，不需要长期运行的云主机。
 
 ## 推送内容
 
@@ -55,6 +55,10 @@
 - `TELEGRAM_CHAT_ID`
 
 工作流每天 UTC 04:30，即北京时间 12:30 触发。GitHub 的定时任务可能有数分钟延迟，也可从 Actions 页面手动运行 `Daily investment thermometer`。
+
+## 历史数据
+
+每次抓取成功后，工作流会将完整数据保存到 `data/snapshots/YYYY-MM-DD.json`，并由 `github-actions[bot]` 自动提交。同一数据日期重复运行会更新同一个文件；内容未变化时不会创建空提交。JSON 包含全市场温度、股债现金配置、全部指数温度、债市温度和原始数据来源 URL。
 
 ## 本地验证
 
