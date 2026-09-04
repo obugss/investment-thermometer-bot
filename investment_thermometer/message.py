@@ -33,10 +33,23 @@ def format_snapshot(snapshot: MarketSnapshot) -> str:
 
 
 def _format_index_rows(snapshot: MarketSnapshot) -> list[str]:
+    display_names = [_fullwidth_name(item.name) for item in snapshot.indices]
+    name_width = max(len(name) for name in display_names)
+    code_width = max(len(item.code) for item in snapshot.indices)
+    degree_width = max(len(f"{item.degree}°") for item in snapshot.indices)
     return [
-        f"<code>{escape(item.name)} {escape(item.code)}   {item.degree}°</code>"
-        for item in snapshot.indices
+        f"<code>{escape(name.ljust(name_width, '　'))} "
+        f"{escape(item.code.ljust(code_width))}   "
+        f"{escape(f'{item.degree}°'.rjust(degree_width))}</code>"
+        for item, name in zip(snapshot.indices, display_names, strict=True)
     ]
+
+
+def _fullwidth_name(value: str) -> str:
+    return "".join(
+        chr(ord(character) + 0xFEE0) if "!" <= character <= "~" else character
+        for character in value
+    )
 
 
 def temperature_zone(degree: int) -> str:
