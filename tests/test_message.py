@@ -1,4 +1,5 @@
 import unittest
+import re
 
 from investment_thermometer.message import format_snapshot, temperature_zone
 from dataclasses import replace
@@ -28,8 +29,13 @@ class FormatSnapshotTests(unittest.TestCase):
         self.assertIn("债券 24%", message)
         self.assertIn("现金 20%", message)
         self.assertNotIn("<pre>", message)
-        self.assertIn("<code>８００消费 000932.SH    1°</code>", message)
-        self.assertIn("<code>沪深３００ 000300.SH   45°</code>", message)
+        rows = re.findall(r"<code>(.*?)</code>　([^\n]+)", message)
+        self.assertEqual([name for _, name in rows], ["800消费", "沪深300"])
+        self.assertEqual(len({len(columns) for columns, _ in rows}), 1)
+        self.assertTrue(rows[0][0].startswith("000932.SH"))
+        self.assertTrue(rows[0][0].endswith(" 1°"))
+        self.assertTrue(rows[1][0].startswith("000300.SH"))
+        self.assertTrue(rows[1][0].endswith("45°"))
         self.assertIn("债市温度：87°（2026-09-03）", message)
         self.assertLessEqual(len(message), 4096)
 
