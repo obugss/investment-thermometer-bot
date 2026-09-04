@@ -1,7 +1,6 @@
 """Format market snapshots for Telegram."""
 
 from html import escape
-import unicodedata
 
 from .source import MarketSnapshot
 
@@ -19,7 +18,8 @@ def format_snapshot(snapshot: MarketSnapshot) -> str:
         f"现金 {allocation.cash}%",
     ]
     if snapshot.indices:
-        lines.extend(["", "指数温度：", _format_index_table(snapshot)])
+        lines.extend(["", "指数温度："])
+        lines.extend(_format_index_rows(snapshot))
     if snapshot.bond_degree is not None:
         bond_date = (
             f"（{snapshot.bond_date:%Y-%m-%d}）" if snapshot.bond_date else ""
@@ -32,27 +32,19 @@ def format_snapshot(snapshot: MarketSnapshot) -> str:
     return message
 
 
-def _format_index_table(snapshot: MarketSnapshot) -> str:
-    name_width = max(_display_width("名称"), *(_display_width(item.name) for item in snapshot.indices))
-    code_width = max(_display_width("代码"), *(_display_width(item.code) for item in snapshot.indices))
-    degree_width = max(_display_width("温度"), *(_display_width(f"{item.degree}°") for item in snapshot.indices))
-    rows = [
-        f"{_pad_display('名称', name_width)}  {_pad_display('代码', code_width)}  {_pad_display('温度', degree_width, right=True)}"
-    ]
-    rows.extend(
-        f"{_pad_display(item.name, name_width)}  {_pad_display(item.code, code_width)}  {_pad_display(f'{item.degree}°', degree_width, right=True)}"
-        for item in snapshot.indices
-    )
-    return f"<pre>{escape(chr(10).join(rows))}</pre>"
-
-
-def _pad_display(value: str, width: int, *, right: bool = False) -> str:
-    padding = " " * (width - _display_width(value))
-    return f"{padding}{value}" if right else f"{value}{padding}"
-
-
-def _display_width(value: str) -> int:
-    return sum(2 if unicodedata.east_asian_width(character) in {"W", "F"} else 1 for character in value)
+def _format_index_rows(snapshot: MarketSnapshot) -> list[str]:
+    code_width = max(len(item.code) for item in snapshot.indices)
+    degree_width = max(len(f"{item.degree}°") for item in snapshot.indices)
+    lines: list[str] = []
+    for item in snapshot.indices:
+        data_row = f"{item.code:<{code_width}}  {f'{item.degree}°':>{degree_width}}"
+        lines.extend(
+            [
+                f"<b>{escape(item.name)}</b>",
+                f"<code>{escape(data_row)}</code>",
+            ]
+        )
+    return lines
 
 
 def temperature_zone(degree: int) -> str:
