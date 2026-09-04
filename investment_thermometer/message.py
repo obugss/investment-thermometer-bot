@@ -2,7 +2,7 @@
 
 from html import escape
 
-from .source import MarketSnapshot, SOURCE_URL, THERMOMETER_URL
+from .source import MarketSnapshot, THERMOMETER_URL
 
 
 def format_snapshot(snapshot: MarketSnapshot) -> str:
@@ -33,9 +33,7 @@ def format_snapshot(snapshot: MarketSnapshot) -> str:
     lines.extend(
         [
             "",
-            "数据来源：",
-            f'• <a href="{escape(SOURCE_URL, quote=True)}">有知有行 · 长钱账户</a>',
-            f'• <a href="{escape(THERMOMETER_URL, quote=True)}">有知有行 · 知行温度计</a>',
+            f'数据来源：<a href="{escape(THERMOMETER_URL, quote=True)}">有知有行 · 知行温度计</a>',
         ]
     )
     message = "\n".join(lines)

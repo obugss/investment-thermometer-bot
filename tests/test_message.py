@@ -43,13 +43,10 @@ class FormatSnapshotTests(unittest.TestCase):
         self.assertTrue(rows[1][0].endswith("45°"))
         self.assertIn("债市温度：87°（2026-09-03）", message)
         self.assertIn(
-            '<a href="https://youzhiyouxing.cn/advisor/longterm_strategy/?hosted=1#temperature">有知有行 · 长钱账户</a>',
+            '数据来源：<a href="https://youzhiyouxing.cn/thermometer">有知有行 · 知行温度计</a>',
             message,
         )
-        self.assertIn(
-            '<a href="https://youzhiyouxing.cn/thermometer">有知有行 · 知行温度计</a>',
-            message,
-        )
+        self.assertEqual(message.count("<a href="), 1)
         self.assertLessEqual(len(message), 4096)
 
     def test_temperature_zone_boundaries(self) -> None:
