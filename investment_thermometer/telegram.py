@@ -14,7 +14,9 @@ class TelegramError(RuntimeError):
 
 def send_message(token: str, chat_id: str, text: str, *, timeout: float = 20.0) -> None:
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    body = urlencode({"chat_id": chat_id, "text": text}).encode("utf-8")
+    body = urlencode(
+        {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
+    ).encode("utf-8")
     request = Request(url, data=body, method="POST")
 
     try:

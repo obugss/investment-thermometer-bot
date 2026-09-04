@@ -27,8 +27,11 @@ class FormatSnapshotTests(unittest.TestCase):
         self.assertIn("股票 56%", message)
         self.assertIn("债券 24%", message)
         self.assertIn("现金 20%", message)
-        self.assertIn("800消费（000932.SH）：1°", message)
-        self.assertIn("沪深300（000300.SH）：45°", message)
+        self.assertIn("<pre>", message)
+        self.assertIn("名称     代码       温度", message)
+        self.assertIn("800消费  000932.SH    1°", message)
+        self.assertIn("沪深300  000300.SH   45°", message)
+        self.assertIn("</pre>", message)
         self.assertIn("债市温度：87°（2026-09-03）", message)
         self.assertLessEqual(len(message), 4096)
 
