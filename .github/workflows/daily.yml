@@ -1,8 +1,8 @@
-name: Daily investment thermometer
+name: Weekday investment thermometer
 
 on:
   schedule:
-    - cron: "30 4 * * *"
+    - cron: "30 4 * * 1-5"
   workflow_dispatch:
 
 permissions:

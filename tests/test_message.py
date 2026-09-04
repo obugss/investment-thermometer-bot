@@ -23,8 +23,13 @@ class FormatSnapshotTests(unittest.TestCase):
             )
         )
 
-        self.assertIn("投资温度计 | 2026-09-03 20:00", message)
+        self.assertIn("<b>投资温度计</b>", message)
+        self.assertIn("<b>🔴 更新时间：2026-09-03 20:00</b>", message)
         self.assertIn("全市场温度：51°（中估）", message)
+        self.assertLess(
+            message.index("全市场温度："), message.index("债市温度：")
+        )
+        self.assertLess(message.index("债市温度："), message.index("资产配置："))
         self.assertIn("股票 56%", message)
         self.assertIn("债券 24%", message)
         self.assertIn("现金 20%", message)
@@ -37,6 +42,14 @@ class FormatSnapshotTests(unittest.TestCase):
         self.assertTrue(rows[1][0].startswith("000300.SH"))
         self.assertTrue(rows[1][0].endswith("45°"))
         self.assertIn("债市温度：87°（2026-09-03）", message)
+        self.assertIn(
+            '<a href="https://youzhiyouxing.cn/advisor/longterm_strategy/?hosted=1#temperature">有知有行 · 长钱账户</a>',
+            message,
+        )
+        self.assertIn(
+            '<a href="https://youzhiyouxing.cn/thermometer">有知有行 · 知行温度计</a>',
+            message,
+        )
         self.assertLessEqual(len(message), 4096)
 
     def test_temperature_zone_boundaries(self) -> None:

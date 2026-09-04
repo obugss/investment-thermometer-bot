@@ -2,30 +2,42 @@
 
 from html import escape
 
-from .source import MarketSnapshot
+from .source import MarketSnapshot, SOURCE_URL, THERMOMETER_URL
 
 
 def format_snapshot(snapshot: MarketSnapshot) -> str:
     allocation = snapshot.allocation
     lines = [
-        f"投资温度计 | {snapshot.updated_at:%Y-%m-%d %H:%M}",
+        "<b>投资温度计</b>",
+        f"<b>🔴 更新时间：{snapshot.updated_at:%Y-%m-%d %H:%M}</b>",
         "",
         f"全市场温度：{snapshot.degree}°（{temperature_zone(snapshot.degree)}）",
-        "",
-        "资产配置：",
-        f"股票 {allocation.stock}%",
-        f"债券 {allocation.bond}%",
-        f"现金 {allocation.cash}%",
     ]
-    if snapshot.indices:
-        lines.extend(["", "指数温度："])
-        lines.extend(_format_index_rows(snapshot))
     if snapshot.bond_degree is not None:
         bond_date = (
             f"（{snapshot.bond_date:%Y-%m-%d}）" if snapshot.bond_date else ""
         )
-        lines.extend(["", f"债市温度：{snapshot.bond_degree}°{bond_date}"])
-    lines.extend(["", "数据来源：有知有行"])
+        lines.append(f"债市温度：{snapshot.bond_degree}°{bond_date}")
+    lines.extend(
+        [
+            "",
+            "资产配置：",
+            f"股票 {allocation.stock}%",
+            f"债券 {allocation.bond}%",
+            f"现金 {allocation.cash}%",
+        ]
+    )
+    if snapshot.indices:
+        lines.extend(["", "指数温度："])
+        lines.extend(_format_index_rows(snapshot))
+    lines.extend(
+        [
+            "",
+            "数据来源：",
+            f'• <a href="{escape(SOURCE_URL, quote=True)}">有知有行 · 长钱账户</a>',
+            f'• <a href="{escape(THERMOMETER_URL, quote=True)}">有知有行 · 知行温度计</a>',
+        ]
+    )
     message = "\n".join(lines)
     if len(message) > 4096:
         raise ValueError("Telegram message exceeds 4096 characters")
