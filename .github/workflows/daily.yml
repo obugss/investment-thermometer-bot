@@ -2,7 +2,7 @@ name: Daily investment thermometer
 
 on:
   schedule:
-    - cron: "30 12 * * *"
+    - cron: "30 4 * * *"
   workflow_dispatch:
 
 permissions:

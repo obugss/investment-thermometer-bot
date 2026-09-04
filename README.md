@@ -38,7 +38,7 @@
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-工作流每天 UTC 12:30，即北京时间 20:30 触发。GitHub 的定时任务可能有数分钟延迟，也可从 Actions 页面手动运行 `Daily investment thermometer`。
+工作流每天 UTC 04:30，即北京时间 12:30 触发。GitHub 的定时任务可能有数分钟延迟，也可从 Actions 页面手动运行 `Daily investment thermometer`。
 
 ## 本地验证
 
