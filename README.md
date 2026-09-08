@@ -54,7 +54,7 @@ H11136.CSI   3°　中国互联网
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-工作流每周一至周五 UTC 04:30，即北京时间 12:30 触发。GitHub 的定时任务可能有数分钟延迟，也可从 Actions 页面手动运行 `Weekday investment thermometer`。
+工作流每周一至周五 UTC 04:23，即北京时间 12:23 触发。GitHub 的定时任务可能有数分钟延迟，也可从 Actions 页面手动运行 `Weekday investment thermometer`。
 
 ## 历史数据
 
