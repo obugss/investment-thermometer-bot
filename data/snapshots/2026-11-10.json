@@ -1,0 +1,79 @@
+{
+  "updated_at": "2026-11-10T20:00:00",
+  "market_temperature": 38,
+  "allocation": {
+    "stock": 59,
+    "bond": 21,
+    "cash": 20
+  },
+  "index_temperatures": [
+    {
+      "name": "中国互联网",
+      "code": "H11136.CSI",
+      "degree": 2
+    },
+    {
+      "name": "800消费",
+      "code": "000932.SH",
+      "degree": 4
+    },
+    {
+      "name": "全指医药",
+      "code": "000991.SH",
+      "degree": 5
+    },
+    {
+      "name": "中证养老",
+      "code": "399812.SZ",
+      "degree": 10
+    },
+    {
+      "name": "沪深300",
+      "code": "000300.SH",
+      "degree": 13
+    },
+    {
+      "name": "中证1000",
+      "code": "000852.SH",
+      "degree": 18
+    },
+    {
+      "name": "创业板指",
+      "code": "399006.SZ",
+      "degree": 19
+    },
+    {
+      "name": "中证红利",
+      "code": "000922.CSI",
+      "degree": 23
+    },
+    {
+      "name": "中证2000",
+      "code": "932000.CSI",
+      "degree": 28
+    },
+    {
+      "name": "上证50",
+      "code": "000016.SH",
+      "degree": 45
+    },
+    {
+      "name": "中证500",
+      "code": "000905.SH",
+      "degree": 49
+    },
+    {
+      "name": "全指信息",
+      "code": "000993.SH",
+      "degree": 62
+    }
+  ],
+  "bond_temperature": {
+    "degree": 99,
+    "date": "2026-11-10"
+  },
+  "sources": [
+    "https://youzhiyouxing.cn/advisor/longterm_strategy/?hosted=1#temperature",
+    "https://youzhiyouxing.cn/thermometer"
+  ]
+}
